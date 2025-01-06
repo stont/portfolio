@@ -261,6 +261,42 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       ('UI/UX Design', 0.75),
     ];
 
+    // Get screen width
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    // Determine number of columns based on screen width
+    final crossAxisCount = screenWidth < 600 ? 1 : // Mobile
+    screenWidth < 900 ? 2 : // Tablet
+    3;  // Desktop
+
+    // Adjust aspect ratio for different screen sizes
+    final childAspectRatio = screenWidth < 600 ? 3.0 : // Mobile: more horizontal
+    screenWidth < 900 ? 2.0 : // Tablet
+    1.5;  // Desktop
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          childAspectRatio: childAspectRatio,
+        ),
+        itemCount: skills.length,
+        itemBuilder: (context, index) {
+          return AnimatedSkillCard(
+            skill: skills[index].$1,
+            progress: skills[index].$2,
+            delay: Duration(milliseconds: 200 * index),
+          );
+        },
+      ),
+    );
+
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),

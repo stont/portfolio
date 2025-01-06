@@ -50,6 +50,15 @@ class _NavIconState extends State<NavIcon> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery
+        .of(context)
+        .size
+        .width < 600;
+    final isDesktop = MediaQuery
+        .of(context)
+        .size
+        .width >= 1100;
+
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
       onExit: (_) => _controller.reverse(),
@@ -57,37 +66,56 @@ class _NavIconState extends State<NavIcon> with SingleTickerProviderStateMixin {
         onTap: widget.onTap,
         child: AnimatedBuilder(
           animation: _controller,
-          builder: (context, child) => Transform.scale(
-            scale: _scaleAnimation.value,
-            child: Transform.rotate(
-              angle: _rotateAnimation.value,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+          builder: (context, child) =>
+              Transform.scale(
+                scale: _scaleAnimation.value,
+                child: Transform.rotate(
+                  angle: _rotateAnimation.value,
+                  child: Container(
+                    width: isMobile ? double.infinity : null,
+                    padding: EdgeInsets.all(isDesktop ? 30 : 20),
+                    decoration: BoxDecoration(
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .surface
+                          .withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: Theme
+                            .of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.2),
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          widget.icon,
+                          size: widget.size,
+                          color: Theme
+                              .of(context)
+                              .colorScheme
+                              .primary,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          widget.label,
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .titleMedium
+                              ?.copyWith(
+                            fontSize: isDesktop ? 18 : 14,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      widget.icon,
-                      size: widget.size,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.label,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ),
         ),
       ),
     );

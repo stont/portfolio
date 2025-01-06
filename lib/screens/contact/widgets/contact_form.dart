@@ -1,6 +1,5 @@
 // lib/screens/contact/widgets/contact_form.dart
 import 'package:flutter/material.dart';
-import '../../../core/services/firebase_service.dart'; // Fixed import path
 
 class ContactForm extends StatefulWidget {
   const ContactForm({Key? key}) : super(key: key);
@@ -37,11 +36,8 @@ class _ContactFormState extends State<ContactForm> {
       setState(() => _isLoading = true);
 
       try {
-        await FirebaseService.saveContactMessage(
-          name: _nameController.text,
-          email: _emailController.text,
-          message: _messageController.text,
-        );
+        // Simulate form submission
+        await Future.delayed(const Duration(seconds: 2));
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -58,8 +54,8 @@ class _ContactFormState extends State<ContactForm> {
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Failed to send message: ${e.toString()}'),
+            const SnackBar(
+              content: Text('Failed to send message. Please try again.'),
               backgroundColor: Colors.red,
             ),
           );
@@ -71,7 +67,6 @@ class _ContactFormState extends State<ContactForm> {
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Card(

@@ -14,30 +14,40 @@ class SocialLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery
+        .of(context)
+        .size
+        .width < 600;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Connect with Me',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 16),
-        Row(
+        Wrap( // Changed from Row to Wrap
+          spacing: 12, // horizontal spacing
+          runSpacing: 12, // vertical spacing
           children: [
             _SocialButton(
               icon: Icons.link,
               label: 'GitHub',
               onPressed: () => _launchURL('https://github.com/yourusername'),
             ),
-            const SizedBox(width: 16),
             _SocialButton(
               icon: Icons.link,
               label: 'LinkedIn',
-              onPressed: () => _launchURL('https://linkedin.com/in/yourusername'),
+              onPressed: () =>
+                  _launchURL('https://linkedin.com/in/yourusername'),
             ),
-            const SizedBox(width: 16),
             _SocialButton(
               icon: Icons.link,
               label: 'Twitter',
@@ -70,6 +80,8 @@ class _SocialButtonState extends State<_SocialButton> {
 
   @override
   Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -78,13 +90,21 @@ class _SocialButtonState extends State<_SocialButton> {
         transform: Matrix4.identity()
           ..scale(_isHovered ? 1.1 : 1.0),
         child: OutlinedButton.icon(
-          icon: Icon(widget.icon),
-          label: Text(widget.label),
+          icon: Icon(
+            widget.icon,
+            size: isSmallScreen ? 18 : 24,
+          ),
+          label: Text(
+            widget.label,
+            style: TextStyle(
+              fontSize: isSmallScreen ? 12 : 14,
+            ),
+          ),
           onPressed: widget.onPressed,
           style: OutlinedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 12,
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 12 : 20,
+              vertical: isSmallScreen ? 8 : 12,
             ),
           ),
         ),

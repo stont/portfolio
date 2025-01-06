@@ -35,12 +35,6 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
     );
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   Widget _buildProjectImage() {
     return Container(
       height: 200,
@@ -128,178 +122,263 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
     }
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() {
-        _isHovered = true;
-        _controller.forward();
-      }),
-      onExit: (_) => setState(() {
-        _isHovered = false;
-        _controller.reverse();
-      }),
-      child: AnimatedBuilder(
-        animation: _scaleAnimation,
-        builder: (context, child) => Transform.scale(
-          scale: _isHovered ? _scaleAnimation.value : 1.0,
-          child: child,
-        ),
-        child: Card(
-          elevation: _isHovered ? 8 : 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildProjectImage(),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.project.description,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 16),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: widget.project.technologies.map((tech) {
-                        return Chip(
-                          label: Text(tech, style: const TextStyle(fontSize: 12)),
-                          padding: EdgeInsets.zero,
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-              const Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: const BorderRadius.vertical(
-                    bottom: Radius.circular(15),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.info_outline),
-                      onPressed: () => _showProjectDetails(context),
-                      tooltip: 'More Info',
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.code),
-                      onPressed: () => _launchURL(widget.project.githubUrl),
-                      tooltip: 'View Code',
-                    ),
-                    if (widget.project.liveUrl != null)
-                      IconButton(
-                        icon: const Icon(Icons.launch),
-                        onPressed: () => _launchURL(widget.project.liveUrl!),
-                        tooltip: 'Live Demo',
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   void _showProjectDetails(BuildContext context) {
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+
     showDialog(
       context: context,
       builder: (context) => Dialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          constraints: const BoxConstraints(maxWidth: 500),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    widget.project.title,
-                    style: Theme.of(context).textTheme.headlineSmall,
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Image.asset(
-                  widget.project.imageUrl,
-                  width: double.infinity,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Description',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Text(widget.project.description),
-              const SizedBox(height: 16),
-              Text(
-                'Technologies Used',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: widget.project.technologies.map((tech) {
-                  return Chip(label: Text(tech));
-                }).toList(),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.code),
-                    label: const Text('View Code'),
-                    onPressed: () => _launchURL(widget.project.githubUrl),
-                  ),
-                  if (widget.project.liveUrl != null)
-                    ElevatedButton.icon(
-                      icon: const Icon(Icons.launch),
-                      label: const Text('Live Demo'),
-                      onPressed: () => _launchURL(widget.project.liveUrl!),
+        child: SingleChildScrollView( // Added ScrollView
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(24),
+            constraints: BoxConstraints(
+              maxWidth: 500,
+              maxHeight: isSmallScreen
+                  ? MediaQuery.of(context).size.height * 0.8
+                  : MediaQuery.of(context).size.height * 0.9,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.project.title,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                ],
-              ),
-            ],
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Image
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: AspectRatio(
+                    aspectRatio: 16/9,
+                    child: Image.asset(
+                      widget.project.imageUrl,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+
+                // Description
+                Text(
+                  'Description',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  widget.project.description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 16),
+
+                // Technologies
+                Text(
+                  'Technologies Used',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: widget.project.technologies.map((tech) {
+                    return Chip(
+                      label: Text(tech),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 4,
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 24),
+
+                // Action Buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.code),
+                        label: const Text('View Code'),
+                        onPressed: () => _launchURL(widget.project.githubUrl),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    if (widget.project.liveUrl != null)
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.launch),
+                          label: const Text('Live Demo'),
+                          onPressed: () => _launchURL(widget.project.liveUrl!),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    final isSmallScreen = MediaQuery
+        .of(context)
+        .size
+        .width < 600;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: Card(
+        elevation: _isHovered ? 8 : 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Project Image Section
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(15)),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      widget.project.imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return _buildPlaceholderContent();
+                      },
+                    ),
+                    // Gradient overlay
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withOpacity(0.7),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Title overlay
+                    Positioned(
+                      bottom: 12,
+                      left: 12,
+                      right: 12,
+                      child: Text(
+                        widget.project.title,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Project Details Section
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Description
+                  Text(
+                    widget.project.description,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyMedium,
+                    maxLines: isSmallScreen ? 2 : 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Technologies
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: widget.project.technologies.map((tech) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: Chip(
+                            label: Text(
+                                tech, style: const TextStyle(fontSize: 12)),
+                            padding: EdgeInsets.zero,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+
+                  // Action Buttons
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.info_outline),
+                        onPressed: () => _showProjectDetails(context),
+                        tooltip: 'More Info',
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.code),
+                        onPressed: () => _launchURL(widget.project.githubUrl),
+                        tooltip: 'View Code',
+                      ),
+                      if (widget.project.liveUrl != null)
+                        IconButton(
+                          icon: const Icon(Icons.launch),
+                          onPressed: () => _launchURL(widget.project.liveUrl!),
+                          tooltip: 'Live Demo',
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
     @override
     void dispose() {
       _controller.dispose();
       super.dispose();
     }
   }
-}
