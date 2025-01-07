@@ -40,15 +40,17 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
     );
 
     _fadeAnimations = List.generate(
-      3,
-          (index) =>
-          Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-              parent: _fadeController,
-              curve: Interval(
-                  index * 0.2, (index * 0.2) + 0.6, curve: Curves.easeOut),
-            ),
+      4,
+          (index) => Tween<double>(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+          parent: _fadeController,
+          curve: Interval(
+            index * 0.2,
+            (index * 0.2) + 0.6,
+            curve: Curves.easeOut,
           ),
+        ),
+      ),
     );
 
     _fadeController.forward();
@@ -71,15 +73,8 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Theme
-                .of(context)
-                .colorScheme
-                .background,
-            Theme
-                .of(context)
-                .colorScheme
-                .background
-                .withOpacity(0.8),
+            Theme.of(context).colorScheme.background,
+            Theme.of(context).colorScheme.background.withOpacity(0.8),
           ],
         ),
       ),
@@ -97,11 +92,7 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
                 opacity: _fadeAnimations[0],
                 child: Text(
                   'David Oluwabusayo',
-                  style: Theme
-                      .of(context)
-                      .textTheme
-                      .displayMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     fontSize: widget.isMobile ? 32 : 48,
                   ),
@@ -125,8 +116,7 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
                   constraints: const BoxConstraints(maxWidth: 800),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildNavigationItems(
-                        spacing, iconSize, isHorizontal: true),
+                    children: _buildNavigationItems(spacing, iconSize, isHorizontal: true),
                   ),
                 ),
               const Spacer(),
@@ -137,8 +127,7 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
     );
   }
 
-  List<Widget> _buildNavigationItems(double spacing, double iconSize,
-      {bool isHorizontal = false}) {
+  List<Widget> _buildNavigationItems(double spacing, double iconSize, {bool isHorizontal = false}) {
     final items = [
       FadeTransition(
         opacity: _fadeAnimations[1],
@@ -173,6 +162,19 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
           label: 'Contact',
           size: iconSize,
           onTap: () => Navigator.pushNamed(context, '/contact'),
+        ),
+      ),
+      if (isHorizontal)
+        SizedBox(width: spacing)
+      else
+        SizedBox(height: spacing),
+      FadeTransition(
+        opacity: _fadeAnimations[2],
+        child: NavIcon(
+          icon: Icons.article_outlined,
+          label: 'Blog',
+          size: iconSize,
+          onTap: () => Navigator.pushNamed(context, '/blog'),
         ),
       ),
     ];

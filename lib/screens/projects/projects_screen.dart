@@ -13,40 +13,56 @@ class ProjectsScreen extends StatefulWidget {
 }
 
 class _ProjectsScreenState extends State<ProjectsScreen> {
-  String _selectedCategory = 'All';
-  final List<String> _categories = ['All', 'Mobile', 'Web', 'UI/UX', 'Backend'];
   final TextEditingController _searchController = TextEditingController();
   List<Project> _filteredProjects = [];
+
+  String _selectedCategory = 'All';
+  String _selectedTechStack = 'All';
+  final List<String> _categories = ['All', 'Mobile', 'Web', 'UI/UX', 'Backend'];
+  List<String> _techStacks = ['All']; // Will be populated from projects
 
   @override
   void initState() {
     super.initState();
-    // Use sampleProjects instead of _projects
     _filteredProjects = sampleProjects;
+    // Extract unique tech stacks from all projects
+    _techStacks.addAll(
+        sampleProjects
+            .expand((project) => project.technologies)
+            .toSet()
+            .toList()
+    );
+  }
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _filterProjects(String query) {
     setState(() {
-      if (_selectedCategory == 'All') {
-        _filteredProjects = sampleProjects
-            .where((project) =>
-        project.title.toLowerCase().contains(query.toLowerCase()) ||
-            project.description.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      } else {
-        _filteredProjects = sampleProjects
-            .where((project) =>
-        project.categories.contains(_selectedCategory) &&
-            (project.title.toLowerCase().contains(query.toLowerCase()) ||
-                project.description.toLowerCase().contains(query.toLowerCase())))
-            .toList();
-      }
+      _filteredProjects = sampleProjects.where((project) {
+        bool matchesQuery = project.title.toLowerCase().contains(
+            query.toLowerCase()) ||
+            project.description.toLowerCase().contains(query.toLowerCase());
+
+        bool matchesCategory = _selectedCategory == 'All' ||
+            project.categories.contains(_selectedCategory);
+
+        bool matchesTech = _selectedTechStack == 'All' ||
+            project.technologies.contains(_selectedTechStack);
+
+        return matchesQuery && matchesCategory && matchesTech;
+      }).toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    final isSmallScreen = MediaQuery
+        .of(context)
+        .size
+        .width < 600;
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'Projects'),
@@ -88,7 +104,9 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: Theme
+            .of(context)
+            .cardColor,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -115,26 +133,51 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: _categories.map((category) {
-                final isSelected = _selectedCategory == category;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: FilterChip(
-                    label: Text(category),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      setState(() {
-                        _selectedCategory = category;
-                        _filterProjects(_searchController.text);
-                      });
-                    },
+          Row(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _categories.map((category) {
+                      final isSelected = _selectedCategory == category;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: FilterChip(
+                          label: Text(category),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedCategory = category;
+                              _filterProjects(_searchController.text);
+                            });
+                          },
+                        ),
+                      );
+                    }).toList(),
                   ),
-                );
-              }).toList(),
-            ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              DropdownButton<String>(
+                value: _selectedTechStack,
+                onChanged: (String? newValue) {
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedTechStack = newValue;
+                      _filterProjects(_searchController.text);
+                    });
+                  }
+                },
+                items: _techStacks.map<DropdownMenuItem<String>>((
+                    String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
         ],
       ),
