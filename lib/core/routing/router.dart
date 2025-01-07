@@ -1,5 +1,6 @@
 // lib/core/routing/router.dart
 import 'package:flutter/material.dart';
+import '../../screens/blog/blog_screen.dart';
 import 'custom_page_transition.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/about/about_screen.dart';
@@ -11,6 +12,7 @@ class AppRouter {
   static const String about = '/about';
   static const String projects = '/projects';
   static const String contact = '/contact';
+  static const String blog = '/blog';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -22,6 +24,8 @@ class AppRouter {
         return CustomPageTransition(page: const ProjectsScreen());
       case contact:
         return CustomPageTransition(page: const ContactScreen());
+      case blog:
+        return CustomPageTransition(page: const BlogScreen());
       default:
         return CustomPageTransition(
           page: Scaffold(

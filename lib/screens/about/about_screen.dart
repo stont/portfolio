@@ -1,5 +1,7 @@
 // lib/screens/about/about_screen.dart
 import 'package:flutter/material.dart';
+import 'package:portfolio/screens/about/widgets/skills_timeline.dart';
+import 'package:portfolio/screens/about/widgets/testimonials_section.dart';
 import '../../core/widgets/custom_app_bar.dart';
 import 'widgets/typewriter_text.dart';
 import 'widgets/animated_skill_card.dart';
@@ -70,7 +72,10 @@ When I'm not coding, you can find me exploring new technologies, contributing to
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    final isSmallScreen = MediaQuery
+        .of(context)
+        .size
+        .width < 600;
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'About Me'),
@@ -82,6 +87,7 @@ When I'm not coding, you can find me exploring new technologies, contributing to
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Existing about section
                 if (isSmallScreen) ...[
                   _buildTypewriterText(),
                   if (_showImage) _buildProfileSection(),
@@ -96,11 +102,47 @@ When I'm not coding, you can find me exploring new technologies, contributing to
                       ],
                     ),
                   ),
+
+                // Skills Timeline Section
                 if (_showExperience) ...[
+                  const SizedBox(height: 60),
+                  Text(
+                    'Skills Journey',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .headlineMedium,
+                  ),
+                  const SizedBox(height: 24),
+                  SkillTimeline(
+                    skills: [
+                      SkillEntry(
+                        title: 'Flutter Development',
+                        period: '2020 - Present',
+                        description: 'Mastering cross-platform development with Flutter',
+                        icon: Icons.flutter_dash,
+                      ),
+                      SkillEntry(
+                        title: 'Mobile Development',
+                        period: '2019 - 2020',
+                        description: 'Started with native Android development',
+                        icon: Icons.android,
+                      ),
+                      // Add more skills
+                    ],
+                  ),
+
+                  // Experience Section
                   const SizedBox(height: 40),
                   _buildExperienceSection(),
+
+                  // Skills Grid
                   const SizedBox(height: 40),
                   _buildSkillsGrid(),
+
+                  // Testimonials Section
+                  const SizedBox(height: 60),
+                  const TestimonialsSection(),
                 ],
               ],
             ),
@@ -122,10 +164,16 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme
+            .of(context)
+            .colorScheme
+            .surface,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            color: Theme
+                .of(context)
+                .shadowColor
+                .withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -152,7 +200,10 @@ When I'm not coding, you can find me exploring new technologies, contributing to
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Theme.of(context).shadowColor.withOpacity(0.2),
+                      color: Theme
+                          .of(context)
+                          .shadowColor
+                          .withOpacity(0.2),
                       blurRadius: 15,
                       offset: const Offset(0, 5),
                     ),
@@ -211,10 +262,16 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme
+            .of(context)
+            .colorScheme
+            .surface,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            color: Theme
+                .of(context)
+                .shadowColor
+                .withOpacity(0.1),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -222,10 +279,19 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       ),
       child: Column(
         children: [
-          Icon(icon, size: 30, color: Theme.of(context).colorScheme.primary),
+          Icon(icon, size: 30, color: Theme
+              .of(context)
+              .colorScheme
+              .primary),
           const SizedBox(height: 10),
-          Text(title, style: Theme.of(context).textTheme.titleMedium),
-          Text(subtitle, style: Theme.of(context).textTheme.bodyMedium),
+          Text(title, style: Theme
+              .of(context)
+              .textTheme
+              .titleMedium),
+          Text(subtitle, style: Theme
+              .of(context)
+              .textTheme
+              .bodyMedium),
         ],
       ),
     );
@@ -262,17 +328,22 @@ When I'm not coding, you can find me exploring new technologies, contributing to
     ];
 
     // Get screen width
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
 
     // Determine number of columns based on screen width
     final crossAxisCount = screenWidth < 600 ? 1 : // Mobile
     screenWidth < 900 ? 2 : // Tablet
-    3;  // Desktop
+    3; // Desktop
 
     // Adjust aspect ratio for different screen sizes
-    final childAspectRatio = screenWidth < 600 ? 3.0 : // Mobile: more horizontal
+    final childAspectRatio = screenWidth < 600
+        ? 3.0
+        : // Mobile: more horizontal
     screenWidth < 900 ? 2.0 : // Tablet
-    1.5;  // Desktop
+    1.5; // Desktop
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -296,7 +367,6 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       ),
     );
 
-
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -316,6 +386,7 @@ When I'm not coding, you can find me exploring new technologies, contributing to
       },
     );
   }
+
 
   void _downloadCV(BuildContext context) {
     // Implement CV download functionality
