@@ -75,7 +75,7 @@ class ContactScreen extends StatelessWidget {
           context,
           icon: Icons.location_on_outlined,
           title: 'Location',
-          content: 'Latitude 0.33345; Longitude 3.2256',
+          content: '7.376736, 3.939786',
         ),
         const SizedBox(height: 40),
         const SocialLinks(),

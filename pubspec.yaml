@@ -34,6 +34,30 @@ flutter:
     - assets/images/
     - assets/images/projects/
     - assets/images/projects/logistics.png
+    - assets/images/projects/hms.png
+    - assets/images/projects/birthday.jpg
+    - assets/images/projects/memopad.png
+    - assets/images/projects/portfolio.png
+    - assets/images/projects/vcard.jpg
     - assets/images/testimonials/john.jpg
+    - assets/images/testimonials/faith.jpg
+    - assets/images/testimonials/gold.jpg
+    - assets/images/testimonials/godfather.png
     - assets/images/blog/flutter-intro.jpg
     - assets/images/blog/story.jpg
+    - lib/screens/
+    - lib/screens/blog/
+    - lib/screens/blog/models/
+    - lib/screens/blog/screens/
+    - lib/screens/blog/widgets/
+    - lib/screens/home/
+    - lib/screens/home/widgets/
+    - lib/screens/about/
+    - lib/screens/about/widgets/
+    - lib/screens/splash/
+    - lib/screens/contact/
+    - lib/screens/contact/widgets/
+    - lib/screens/projects/
+    - lib/screens/projects/data/
+    - lib/screens/projects/models/
+    - lib/screens/projects/widgets/

@@ -1,5 +1,6 @@
 // lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import '../../core/responsive/responsive_layout.dart';
 import 'widgets/nav_icon.dart';
 
@@ -90,13 +91,91 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
               const Spacer(),
               FadeTransition(
                 opacity: _fadeAnimations[0],
-                child: Text(
-                  'David Oluwabusayo',
-                  style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: widget.isMobile ? 32 : 48,
-                  ),
-                  textAlign: TextAlign.center,
+                child: Column(
+                  children: [
+                    Text(
+                      'David Oluwabusayo',
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.isMobile ? 32 : 48,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'is ',
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            fontSize: widget.isMobile ? 20 : 28,
+                          ),
+                        ),
+                        AnimatedTextKit(
+                          animatedTexts: [
+                            TypewriterAnimatedText(
+                              'a Trainer',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                            TypewriterAnimatedText(
+                              'a Community Manager',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                            TypewriterAnimatedText(
+                              'a Flutter Developer',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                            TypewriterAnimatedText(
+                              'a Web Developer',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                            TypewriterAnimatedText(
+                              'a Mobile App Developer',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                            TypewriterAnimatedText(
+                              'a Paperless Advocate',
+                              textStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontSize: widget.isMobile ? 20 : 28,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              speed: const Duration(milliseconds: 60),
+                            ),
+                          ],
+                          repeatForever: true,
+                          pause: const Duration(milliseconds: 1000),
+                          displayFullTextOnTap: true,
+                          stopPauseOnTap: true,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: widget.isMobile ? 30 : 50),
@@ -112,11 +191,15 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
                 )
               else
               // Desktop: Horizontal layout
-                Container(
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildNavigationItems(spacing, iconSize, isHorizontal: true),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: _buildNavigationItems(spacing, iconSize, isHorizontal: true),
+                    ),
                   ),
                 ),
               const Spacer(),
@@ -158,6 +241,19 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
       FadeTransition(
         opacity: _fadeAnimations[2],
         child: NavIcon(
+          icon: Icons.handyman_outlined,
+          label: 'Services',
+          size: iconSize,
+          onTap: () => Navigator.pushNamed(context, '/services'),
+        ),
+      ),
+      if (isHorizontal)
+        SizedBox(width: spacing)
+      else
+        SizedBox(height: spacing),
+      FadeTransition(
+        opacity: _fadeAnimations[2],
+        child: NavIcon(
           icon: Icons.mail_outline,
           label: 'Contact',
           size: iconSize,
@@ -169,7 +265,7 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
       else
         SizedBox(height: spacing),
       FadeTransition(
-        opacity: _fadeAnimations[2],
+        opacity: _fadeAnimations[3],  // Changed from 2 to 3
         child: NavIcon(
           icon: Icons.article_outlined,
           label: 'Blog',
@@ -179,6 +275,20 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
       ),
     ];
 
+    // For desktop view, wrap items in a ConstrainedBox
+    if (isHorizontal) {
+      return [
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: items,
+          ),
+        ),
+      ];
+    }
+
     return items;
   }
-}
+  }

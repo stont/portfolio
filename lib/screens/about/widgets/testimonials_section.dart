@@ -31,23 +31,24 @@ class _TestimonialsSectionState extends State<TestimonialsSection> with SingleTi
 
   final List<Testimonial> _testimonials = const [
     Testimonial(
-      name: "John Doe",
-      role: "Project Manager at Company X",
+      name: "Moyinoluwa Gold",
+      role: "CEO at GHF",
       content: "David is an exceptional Flutter developer who consistently delivers high-quality work. His attention to detail and problem-solving skills are outstanding.",
-      imageUrl: "assets/images/testimonials/john.jpg",
+      imageUrl: "assets/images/testimonials/gold.jpg",
     ),
     Testimonial(
-      name: "Jane Smith",
-      role: "Lead Developer at Tech Co",
-      content: "Working with this developer has been a fantastic experience. Their Flutter expertise and communication skills made our project a success.",
-      imageUrl: "assets/images/testimonials/john.jpg",
+      name: "Oni Faith Ayoola",
+      role: "Community Manager",
+      content: "He's an amazing being who would do anything to see others grow.",
+      imageUrl: "assets/images/testimonials/faith.jpg",
     ),
     Testimonial(
-      name: "Mike Johnson",
-      role: "CTO at Startup Y",
-      content: "An excellent Flutter developer who brings both technical excellence and creative solutions to every project.",
-      imageUrl: "assets/images/testimonials/john.jpg",
+      name: "Adetunji Adebowale",
+      role: "Group Lead at BHB",
+      content: "Resourceful, Spontaneous, Reliable.",
+      imageUrl: "assets/images/testimonials/godfather.png",
     ),
+
   ];
 
   @override
