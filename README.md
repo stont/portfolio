@@ -10,10 +10,32 @@ A modern, responsive portfolio website built with Flutter Web and Firebase. This
 - **Firebase Integration**: Backend support for contact form and analytics
 
 ### Key Sections:
-- 🏠 Home Page with animated navigation icons
-- 👨‍💻 About Me with typewriter effect and skills display
-- 🚀 Projects showcase with filtering and detailed view
+- 🏠 Home Page with animated name and rotating titles
+- 👨‍💻 About Me with skills display
+- 🚀 Projects showcase with filtering and categories
+- 💼 Services section with detailed offerings
+- 📝 Blog section with commenting system
 - 📬 Contact Form with Firebase integration
+
+### New Features:
+- **Dynamic Blog**: Full-featured blog with commenting system
+- **Animated Titles**: Home page rotating professional titles
+- **Services Showcase**: Detailed services section with cards
+- **SEO Optimization**: Metadata and SEO improvements
+- **Enhanced Email Integration**: Robust contact form handling
+
+## 📧 Email & Form Features
+- Contact form with email service
+- Form response handling
+- Success/Error notifications
+- Rate limiting
+- Spam protection
+
+## 🔍 SEO Implementation
+- Meta tags configuration
+- Sitemap generation
+- robots.txt setup
+- Prerender service integration
 
 ## 🛠️ Built With
 
@@ -40,7 +62,7 @@ A modern, responsive portfolio website built with Flutter Web and Firebase. This
 
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/portfolio.git
+git clone https://github.com/stont/portfolio.git
 ```
 
 2. Navigate to project directory
@@ -75,11 +97,17 @@ lib/
 │   ├── theme/
 │   │   └── theme_provider.dart
 │   └── services/
-│       └── firebase_service.dart
+│       ├── firebase_service.dart
+│       └── email_service.dart
 ├── screens/
 │   ├── home/
 │   ├── about/
 │   ├── projects/
+│   ├── services/
+│   ├── blog/
+│   │   ├── models/
+│   │   ├── widgets/
+│   │   └── screens/
 │   └── contact/
 └── main.dart
 ```
@@ -108,6 +136,19 @@ lib/
 - Firebase integration
 - Social media links
 - Success/error handling
+
+### Services Screen
+- Service cards with hover effects
+- Detailed service descriptions
+- Call-to-action buttons
+- Responsive grid layout
+
+### Blog Screen
+- Blog post listings
+- Post categories and filtering
+- Commenting system
+- Rich text content support
+- Responsive layout for all devices
 
 ## 🚀 Deployment
 
