@@ -7,6 +7,7 @@ class Assets {
   static const String blogBlogScreen = 'lib/screens/blog/blog_screen.dart';
   static const String blogFlutterIntro = 'assets/images/blog/flutter-intro.jpg';
   static const String blogStory = 'assets/images/blog/story.jpg';
+  static const String configFirebaseConfig = 'lib/core/config/firebase_config.dart';
   static const String constantsAppConstants = 'lib/core/constants/app_constants.dart';
   static const String contactContactScreen = 'lib/screens/contact/contact_screen.dart';
   static const String dataSampleProjects = 'lib/screens/projects/data/sample_projects.dart';
@@ -51,9 +52,14 @@ class Assets {
   static const String imagesProjectsMemopad = 'assets/images/projects/memopad.png';
   static const String imagesProjectsPortfolio = 'assets/images/projects/portfolio.png';
   static const String imagesProjectsVcard = 'assets/images/projects/vcard.jpg';
+  static const String imagesTestimonialsFaith = 'assets/images/testimonials/faith.jpg';
+  static const String imagesTestimonialsGodfather = 'assets/images/testimonials/godfather.png';
+  static const String imagesTestimonialsGold = 'assets/images/testimonials/gold.jpg';
   static const String imagesTestimonialsJohn = 'assets/images/testimonials/john.jpg';
+  static const String libFirebaseOptions = 'lib/firebase_options.dart';
   static const String libMain = 'lib/main.dart';
   static const String modelsBlogPost = 'lib/screens/blog/models/blog_post.dart';
+  static const String modelsContactPurpose = 'lib/screens/contact/models/contact_purpose.dart';
   static const String modelsProject = 'lib/screens/projects/models/project.dart';
   static const String modelsService = 'lib/screens/services/models/service.dart';
   static const String projectsBirthday = 'assets/images/projects/birthday.jpg';
@@ -67,8 +73,13 @@ class Assets {
   static const String routingCustomPageTransition = 'lib/core/routing/custom_page_transition.dart';
   static const String routingRouter = 'lib/core/routing/router.dart';
   static const String screensBlogPostScreen = 'lib/screens/blog/screens/blog_post_screen.dart';
+  static const String servicesEmailService = 'lib/core/services/email_service.dart';
+  static const String servicesFirebaseService = 'lib/core/services/firebase_service.dart';
   static const String servicesServicesScreen = 'lib/screens/services/services_screen.dart';
   static const String splashSplashScreen = 'lib/screens/splash/splash_screen.dart';
+  static const String testimonialsFaith = 'assets/images/testimonials/faith.jpg';
+  static const String testimonialsGodfather = 'assets/images/testimonials/godfather.png';
+  static const String testimonialsGold = 'assets/images/testimonials/gold.jpg';
   static const String testimonialsJohn = 'assets/images/testimonials/john.jpg';
   static const String themeAppTheme = 'lib/core/theme/app_theme.dart';
   static const String themeThemeProvider = 'lib/core/theme/theme_provider.dart';

@@ -40,18 +40,18 @@ class SocialLinks extends StatelessWidget {
             _SocialButton(
               icon: Icons.link,
               label: 'GitHub',
-              onPressed: () => _launchURL('https://github.com/yourusername'),
+              onPressed: () => _launchURL('https://github.com/stont'),
             ),
             _SocialButton(
               icon: Icons.link,
               label: 'LinkedIn',
               onPressed: () =>
-                  _launchURL('https://linkedin.com/in/yourusername'),
+                  _launchURL('https://linkedin.com/in/davidstont'),
             ),
             _SocialButton(
               icon: Icons.link,
               label: 'Twitter',
-              onPressed: () => _launchURL('https://twitter.com/yourusername'),
+              onPressed: () => _launchURL('https://twitter.com/david_stont'),
             ),
           ],
         ),

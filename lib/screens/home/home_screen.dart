@@ -203,6 +203,17 @@ class _HomeContentState extends State<_HomeContent> with SingleTickerProviderSta
                   ),
                 ),
               const Spacer(),
+              // Copyright Text
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: Text(
+                  '© 2025 Paperless. All rights reserved.',
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.7),
+                    fontSize: 12,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
