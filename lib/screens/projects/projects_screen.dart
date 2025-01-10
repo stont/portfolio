@@ -59,16 +59,49 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isSmallScreen = MediaQuery
-        .of(context)
-        .size
-        .width < 600;
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final padding = screenWidth > 1200 ? (screenWidth - 1200) / 2 : 24.0;
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Projects'),
+      appBar: const CustomAppBar(title: 'My Projects'),
       body: Column(
         children: [
+          // Header Section
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: padding,
+              vertical: isSmallScreen ? 32 : 48,
+            ),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Flutter in Action',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  'Showcasing a collection of cross-platform applications crafted with Flutter, demonstrating the power of single codebase solutions.',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).textTheme.bodyLarge?.color?.withOpacity(0.7),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+
+          // Search and Filter Section
           _buildSearchAndFilter(),
+
+          // Projects Grid
           Expanded(
             child: _filteredProjects.isEmpty
                 ? const Center(child: Text('No projects found'))

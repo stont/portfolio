@@ -1,7 +1,7 @@
 // lib/core/constants/app_constants.dart
 class AppConstants {
   static const String appName = 'Stont Portfolio';
-  static const String appVersion = '1.1.0';
+  static const String appVersion = '1.2.0';
 
   // Navigation
   static const String homeTitle = 'Home';

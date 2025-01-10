@@ -1,5 +1,6 @@
 // lib/screens/projects/widgets/project_card.dart
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/project.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -110,13 +111,35 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
   }
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      // Show error if URL can't be launched
+    try {
+      if (await canLaunchUrl(uri)) {
+        await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,  // Opens in external browser
+          webOnlyWindowName: '_blank',
+        );
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not launch $url')),
+          SnackBar(
+            content: Text('Error opening link: ${e.toString()}'),
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: 'Copy URL',
+              onPressed: () {
+                // Add clipboard functionality
+                // ignore: deprecated_member_use
+                Clipboard.setData(ClipboardData(text: url)).then((_) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('URL copied to clipboard')),
+                  );
+                });
+              },
+            ),
+          ),
         );
       }
     }
@@ -124,6 +147,7 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
 
   void _showProjectDetails(BuildContext context) {
     final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    final height = MediaQuery.of(context).size.height;
 
     showDialog(
       context: context,
@@ -131,22 +155,18 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        child: SingleChildScrollView( // Added ScrollView
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(24),
-            constraints: BoxConstraints(
-              maxWidth: 500,
-              maxHeight: isSmallScreen
-                  ? MediaQuery.of(context).size.height * 0.8
-                  : MediaQuery.of(context).size.height * 0.9,
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header
-                Row(
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            maxWidth: 500,
+            maxHeight: isSmallScreen ? height * 0.8 : height * 0.9,
+          ),
+          child: Column(
+            children: [
+              // Header (fixed at top)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
@@ -159,82 +179,93 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
                     IconButton(
                       icon: const Icon(Icons.close),
                       onPressed: () => Navigator.pop(context),
+                      padding: EdgeInsets.zero,
                     ),
                   ],
                 ),
-                const SizedBox(height: 16),
+              ),
 
-                // Image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: AspectRatio(
-                    aspectRatio: 16/9,
-                    child: Image.asset(
-                      widget.project.imageUrl,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Description
-                Text(
-                  'Description',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  widget.project.description,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-
-                // Technologies
-                Text(
-                  'Technologies Used',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: widget.project.technologies.map((tech) {
-                    return Chip(
-                      label: Text(tech),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
-                      ),
-                    );
-                  }).toList(),
-                ),
-                const SizedBox(height: 24),
-
-                // Action Buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton.icon(
-                        icon: const Icon(Icons.code),
-                        label: const Text('View Code'),
-                        onPressed: () => _launchURL(widget.project.githubUrl),
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    if (widget.project.liveUrl != null)
-                      Expanded(
-                        child: ElevatedButton.icon(
-                          icon: const Icon(Icons.launch),
-                          label: const Text('Live Demo'),
-                          onPressed: () => _launchURL(widget.project.liveUrl!),
+              // Scrollable content
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Image
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: AspectRatio(
+                          aspectRatio: 16/9,
+                          child: Image.asset(
+                            widget.project.imageUrl,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                  ],
+                      const SizedBox(height: 16),
+
+                      // Description
+                      Text(
+                        'Description',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.project.description,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Technologies
+                      Text(
+                        'Technologies Used',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: widget.project.technologies.map((tech) {
+                          return Chip(
+                            label: Text(tech),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 4,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Action Buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ElevatedButton.icon(
+                              icon: const Icon(Icons.code),
+                              label: const Text('View Code'),
+                              onPressed: () => _launchURL(widget.project.githubUrl),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          if (widget.project.liveUrl != null)
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                icon: const Icon(Icons.launch),
+                                label: const Text('Live Demo'),
+                                onPressed: () => _launchURL(widget.project.liveUrl!),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -317,14 +348,14 @@ class _ProjectCardState extends State<ProjectCard> with SingleTickerProviderStat
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Description
-                  Text(
-                    widget.project.description,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .bodyMedium,
-                    maxLines: isSmallScreen ? 2 : 3,
-                    overflow: TextOverflow.ellipsis,
+                  SizedBox(
+                    height: isSmallScreen ? 60 : 80,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        widget.project.description,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 12),
 

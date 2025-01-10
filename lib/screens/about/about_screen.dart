@@ -117,15 +117,51 @@ When I'm not coding, you can find me exploring new technologies, contributing to
                   SkillTimeline(
                     skills: [
                       SkillEntry(
-                        title: 'Flutter Development',
-                        period: '2020 - Present',
-                        description: 'Mastering cross-platform development with Flutter',
+                        title: 'Building Exceptionally with Flutter',
+                        period: '2022 - Present',
+                        description: 'Thinking and building unimaginable stuff with Flutter and its Packages',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'Dart & Flutter',
+                        period: '2019 - 2020',
+                        description: 'Diving deeper daily to what length Flutter and Dart can go',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'Introduction to Flutter',
+                        period: '2019',
+                        description: 'Learning what is #Flutter and what it can do',
                         icon: Icons.flutter_dash,
                       ),
                       SkillEntry(
                         title: 'Mobile Development',
-                        period: '2019 - 2020',
-                        description: 'Started with native Android development',
+                        period: '2018 - 2019',
+                        description: 'Started with JAVA, Kotlin, Swift',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'Community Building',
+                        period: '2018',
+                        description: 'Practicing all what I have learned and building community',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'Cisco - Networking',
+                        period: '2017',
+                        description: 'Took a dive into Networking and local server configuration and management',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'PHP, Laravel, MySQL',
+                        period: '2015 - 2017',
+                        description: 'Progress to backend development',
+                        icon: Icons.android,
+                      ),
+                      SkillEntry(
+                        title: 'Learning Web Development',
+                        period: '2014 - 2015',
+                        description: 'Started with HTML & CSS, JQuery, I was building projects as I was learning',
                         icon: Icons.android,
                       ),
                       // Add more skills
@@ -237,17 +273,17 @@ When I'm not coding, you can find me exploring new technologies, contributing to
         _buildInfoCard(
           icon: Icons.location_on,
           title: 'Location',
-          subtitle: 'Your Location',
+          subtitle: '7.376736, 3.939786',
         ),
         _buildInfoCard(
           icon: Icons.work,
           title: 'Experience',
-          subtitle: '3+ Years',
+          subtitle: '7+ Years',
         ),
         _buildInfoCard(
           icon: Icons.code,
           title: 'Projects',
-          subtitle: '20+ Completed',
+          subtitle: '15+ Completed',
         ),
       ],
     );
@@ -301,16 +337,34 @@ When I'm not coding, you can find me exploring new technologies, contributing to
     return ExperienceTimeline(
       experiences: [
         Experience(
-          role: 'Senior Flutter Developer',
-          company: 'Company A',
-          duration: '2022 - Present',
+          role: 'Chief Technology Officer (CTO)',
+          company: 'Paperless',
+          duration: '2023 - Present',
           description: 'Led development of multiple successful apps...',
         ),
         Experience(
           role: 'Flutter Developer',
-          company: 'Company B',
-          duration: '2020 - 2022',
-          description: 'Developed and maintained several Flutter applications...',
+          company: 'Freelancing',
+          duration: '2020 - Present',
+          description: 'Developed and maintained projects applications for several clients...',
+        ),
+        Experience(
+          role: 'Community Manager',
+          company: 'GDG Ado-Ekiti',
+          duration: '2017 - Present',
+          description: 'Google Developers Community, Ado-Ekiti - is a community that pushes innovation to limits and engages audiences with content from Google and partners.',
+        ),
+        Experience(
+          role: 'Community Manager',
+          company: 'Codenovation',
+          duration: '2022 - Present',
+          description: 'Codenovation - I Develop innovative programs and also reach out to partners for collaboration and support.',
+        ),
+        Experience(
+          role: 'Community Manager',
+          company: 'Aricah NG',
+          duration: 'Jan 2023 - Jan 2024',
+          description: 'ARICAH NG - Aricah Tech Community is a non-profit organization focused on providing an enabling environment for tech professionals.',
         ),
         // Add more experiences
       ],
@@ -319,12 +373,12 @@ When I'm not coding, you can find me exploring new technologies, contributing to
 
   Widget _buildSkillsGrid() {
     final skills = [
-      ('Flutter', 0.9),
-      ('Dart', 0.85),
-      ('Firebase', 0.8),
-      ('REST APIs', 0.85),
-      ('Git', 0.8),
-      ('UI/UX Design', 0.75),
+      ('Flutter', 0.85),
+      ('Dart', 0.80),
+      ('Firebase', 0.80),
+      ('REST APIs', 0.75),
+      ('Git', 0.70),
+      ('UI/UX Design', 0.90),
     ];
 
     // Get screen width

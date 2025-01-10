@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.0.5
   google_fonts: ^4.0.3
   animated_text_kit: ^4.2.2
   url_launcher: ^6.1.11
@@ -20,6 +19,11 @@ dependencies:
   flutter_markdown: ^0.6.18
   carousel_slider: ^4.2.1
   timeline_tile: ^2.0.0
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
+  provider: ^6.1.1
+  cloud_functions: ^4.5.8
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +38,30 @@ flutter:
     - assets/images/
     - assets/images/projects/
     - assets/images/projects/logistics.png
+    - assets/images/projects/hms.png
+    - assets/images/projects/birthday.jpg
+    - assets/images/projects/memopad.png
+    - assets/images/projects/portfolio.png
+    - assets/images/projects/vcard.jpg
     - assets/images/testimonials/john.jpg
+    - assets/images/testimonials/faith.jpg
+    - assets/images/testimonials/gold.jpg
+    - assets/images/testimonials/godfather.png
     - assets/images/blog/flutter-intro.jpg
     - assets/images/blog/story.jpg
+    - lib/screens/
+    - lib/screens/blog/
+    - lib/screens/blog/models/
+    - lib/screens/blog/screens/
+    - lib/screens/blog/widgets/
+    - lib/screens/home/
+    - lib/screens/home/widgets/
+    - lib/screens/about/
+    - lib/screens/about/widgets/
+    - lib/screens/splash/
+    - lib/screens/contact/
+    - lib/screens/contact/widgets/
+    - lib/screens/projects/
+    - lib/screens/projects/data/
+    - lib/screens/projects/models/
+    - lib/screens/projects/widgets/

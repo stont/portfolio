@@ -36,7 +36,7 @@ class _BlogContentState extends State<BlogContent> {
       readTime: '5 min read',
       date: '2024-01-15',
       content: 'Maria stayed ahead by dedicating one hour a week to exploring new tech trends. Her adaptability made her the go-to expert in her company.'
-    ),
+    ),/*
     BlogPost(
       title: 'Getting Started with Flutter',
       summary: 'A comprehensive guide to starting your Flutter journey...',
@@ -76,7 +76,7 @@ class _BlogContentState extends State<BlogContent> {
       date: '2024-01-15',
       content: 'As 2025 begins, we at Paperless want to express our heartfelt gratitude for your trust and support throughout the years. Together, we’ve accomplished so much, and we’re excited about what lies ahead.\n\n\n'
           'This year, we’re committed to helping you achieve your goals with innovative tools and seamless solutions. Let’s make 2025 a year to remember! Wishing you success happiness and prosperity in the year ahead.',
-    ),
+    ),*/
     // Add more blog posts
   ];
 
@@ -251,7 +251,7 @@ class _BlogContentState extends State<BlogContent> {
               onSelected: (selected) {
                 setState(() {
                   _selectedCategory = category;
-                  _filterPosts;  // Add this method too
+                  _filterPosts;
                 });
               },
             ),

@@ -1,14 +1,24 @@
 // lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'core/theme/theme_provider.dart';
 import 'core/routing/router.dart';
+import 'firebase_options.dart';
 import 'screens/splash/splash_screen.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  runApp(const PortfolioApp());
+void main() async {
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    runApp(const PortfolioApp());
+  } catch (e) {
+    print('Error initializing Firebase: $e');
+    // Still run the app even if Firebase fails
+    runApp(const PortfolioApp());
+  }
 }
 
 class PortfolioApp extends StatelessWidget {
