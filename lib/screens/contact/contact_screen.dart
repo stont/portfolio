@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../core/widgets/custom_app_bar.dart';
+import '../../core/widgets/whatsapp_button.dart';
 import 'widgets/contact_form.dart';
 import 'widgets/social_links.dart';
 
@@ -54,6 +55,7 @@ class _ContactScreenState extends State<ContactScreen> with SingleTickerProvider
 
     return Scaffold(
       appBar: const CustomAppBar(title: 'Contact'),
+      floatingActionButton: const WhatsAppButton(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

@@ -97,5 +97,6 @@ class Assets {
   static const String widgetsSocialLinks = 'lib/screens/contact/widgets/social_links.dart';
   static const String widgetsTestimonialsSection = 'lib/screens/about/widgets/testimonials_section.dart';
   static const String widgetsTypewriterText = 'lib/screens/about/widgets/typewriter_text.dart';
+  static const String widgetsWhatsappButton = 'lib/core/widgets/whatsapp_button.dart';
 
 }
