@@ -10,6 +10,7 @@ class Assets {
   static const String configFirebaseConfig = 'lib/core/config/firebase_config.dart';
   static const String constantsAppConstants = 'lib/core/constants/app_constants.dart';
   static const String contactContactScreen = 'lib/screens/contact/contact_screen.dart';
+  static const String dataSampleCertifications = 'lib/screens/about/data/sample_certifications.dart';
   static const String dataSampleProjects = 'lib/screens/projects/data/sample_projects.dart';
   static const String dataSampleServices = 'lib/screens/services/data/sample_services.dart';
   static const String fontsRobotoBlack = 'assets/fonts/Roboto-Black.ttf';
@@ -59,6 +60,7 @@ class Assets {
   static const String libFirebaseOptions = 'lib/firebase_options.dart';
   static const String libMain = 'lib/main.dart';
   static const String modelsBlogPost = 'lib/screens/blog/models/blog_post.dart';
+  static const String modelsCertification = 'lib/screens/about/models/certification.dart';
   static const String modelsContactPurpose = 'lib/screens/contact/models/contact_purpose.dart';
   static const String modelsProject = 'lib/screens/projects/models/project.dart';
   static const String modelsService = 'lib/screens/services/models/service.dart';
@@ -87,6 +89,8 @@ class Assets {
   static const String widgetsBlogContent = 'lib/screens/blog/widgets/blog_content.dart';
   static const String widgetsBlogPostCard = 'lib/screens/blog/widgets/blog_post_card.dart';
   static const String widgetsBlogSearch = 'lib/screens/blog/widgets/blog_search.dart';
+  static const String widgetsCertificationCard = 'lib/screens/about/widgets/certification_card.dart';
+  static const String widgetsCertificationsSection = 'lib/screens/about/widgets/certifications_section.dart';
   static const String widgetsContactForm = 'lib/screens/contact/widgets/contact_form.dart';
   static const String widgetsCustomAppBar = 'lib/core/widgets/custom_app_bar.dart';
   static const String widgetsExperienceTimeline = 'lib/screens/about/widgets/experience_timeline.dart';

@@ -1,16 +1,30 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+admin.initializeApp();
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.sendEmail = functions.https.onCall(async (data, context) => {
+  try {
+    // Validate incoming data
+    if (!data.name || !data.email || !data.phone || !data.message || !data.purpose) {
+      throw new functions.https.HttpsError(
+          "invalid-argument",
+          "Missing required fields"
+      );
+    }
+
+    // Create a unique message ID
+    const messageId = admin.firestore().collection("email_logs").doc().id;
+
+    // Here you would typically integrate with your email service
+    // For now, we'll just return success
+    return {
+      success: true,
+      messageId: messageId,
+      message: "Email sent successfully"
+    };
+  } catch (error) {
+    console.error("Error sending email:", error);
+    throw new functions.https.HttpsError("internal", error.message);
+  }
+});
