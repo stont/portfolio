@@ -18,7 +18,7 @@ class _BlogContentState extends State<BlogContent> {
   List<BlogPost> _filteredPosts = [];
 
   final List<BlogPost> _posts = [
-    BlogPost(
+    /*BlogPost(
       title: 'Getting Started with Flutter',
       summary: 'A comprehensive guide to starting your Flutter journey...',
       imageUrl: 'assets/images/blog/flutter-intro.jpg',
@@ -36,7 +36,7 @@ class _BlogContentState extends State<BlogContent> {
       readTime: '5 min read',
       date: '2024-01-15',
       content: 'Maria stayed ahead by dedicating one hour a week to exploring new tech trends. Her adaptability made her the go-to expert in her company.'
-    ),/*
+    ),
     BlogPost(
       title: 'Getting Started with Flutter',
       summary: 'A comprehensive guide to starting your Flutter journey...',

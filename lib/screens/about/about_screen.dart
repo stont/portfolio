@@ -1,11 +1,13 @@
 // lib/screens/about/about_screen.dart
 import 'package:flutter/material.dart';
+import 'package:portfolio/screens/about/widgets/certifications_section.dart';
 import 'package:portfolio/screens/about/widgets/skills_timeline.dart';
 import 'package:portfolio/screens/about/widgets/testimonials_section.dart';
 import '../../core/widgets/custom_app_bar.dart';
 import 'widgets/typewriter_text.dart';
 import 'widgets/animated_skill_card.dart';
 import 'widgets/experience_timeline.dart';
+import 'data/sample_certifications.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -175,6 +177,9 @@ When I'm not coding, you can find me exploring new technologies, contributing to
                   // Skills Grid
                   const SizedBox(height: 40),
                   _buildSkillsGrid(),
+
+                  const SizedBox(height: 60),
+                  CertificationsSection(certifications: certifications),
 
                   // Testimonials Section
                   const SizedBox(height: 60),
@@ -420,27 +425,7 @@ When I'm not coding, you can find me exploring new technologies, contributing to
         },
       ),
     );
-
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        childAspectRatio: 1.5,
-      ),
-      itemCount: skills.length,
-      itemBuilder: (context, index) {
-        return AnimatedSkillCard(
-          skill: skills[index].$1,
-          progress: skills[index].$2,
-          delay: Duration(milliseconds: 200 * index),
-        );
-      },
-    );
   }
-
 
   void _downloadCV(BuildContext context) {
     // Implement CV download functionality

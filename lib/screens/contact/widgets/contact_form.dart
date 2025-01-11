@@ -144,6 +144,8 @@ class _ContactFormState extends State<ContactForm> with SingleTickerProviderStat
                   controller: _nameController,
                   label: 'Name',
                   icon: Icons.person_outline,
+                  keyboardType: TextInputType.name,
+                  autocompleteHint: AutofillHints.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your name';
@@ -156,6 +158,8 @@ class _ContactFormState extends State<ContactForm> with SingleTickerProviderStat
                   controller: _emailController,
                   label: 'Email',
                   icon: Icons.email_outlined,
+                  keyboardType: TextInputType.emailAddress,
+                  autocompleteHint: AutofillHints.email,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
@@ -171,12 +175,15 @@ class _ContactFormState extends State<ContactForm> with SingleTickerProviderStat
                   controller: _phoneController,
                   label: 'Phone',
                   icon: Icons.phone_outlined,
+                  keyboardType: TextInputType.phone,
+                  autocompleteHint: AutofillHints.telephoneNumber,
                   validator: _validatePhone,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                     _PhoneNumberFormatter(),
                   ],
                 ),
+
                 const SizedBox(height: 16),
                 _buildPurposeDropdown(),
                 const SizedBox(height: 16),
@@ -229,6 +236,8 @@ class _ContactFormState extends State<ContactForm> with SingleTickerProviderStat
     String? Function(String?)? validator,
     int maxLines = 1,
     List<TextInputFormatter>? inputFormatters,
+    TextInputType? keyboardType,
+    String? autocompleteHint,
   }) {
     return TextFormField(
       controller: controller,
@@ -244,6 +253,10 @@ class _ContactFormState extends State<ContactForm> with SingleTickerProviderStat
       maxLines: maxLines,
       validator: validator,
       inputFormatters: inputFormatters,
+      keyboardType: keyboardType,
+      autocorrect: false,
+      enableSuggestions: true,
+      autofillHints: autocompleteHint != null ? [autocompleteHint] : null,
     );
   }
 
@@ -284,26 +297,31 @@ class _PhoneNumberFormatter extends TextInputFormatter {
       TextEditingValue oldValue,
       TextEditingValue newValue,
       ) {
-    final text = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
+    // Only allow digits
+    var numericValue = newValue.text.replaceAll(RegExp(r'[^\d]'), '');
 
-    if (text.isEmpty) {
-      return newValue.copyWith(text: '');
+    // Limit to 10 digits
+    if (numericValue.length > 11) {
+      numericValue = numericValue.substring(0, 11);
     }
 
-    var formatted = text;
-    if (text.length >= 3) {
-      formatted = '${text.substring(0, 3)}';
-    }
-    if (text.length >= 6) {
-      formatted = '${formatted}-${text.substring(3, 6)}';
-    }
-    if (text.length >= 10) {
-      formatted = '${formatted}-${text.substring(6, 10)}';
+    var newText = '';
+    var selectionIndex = numericValue.length;
+
+    // Format: XXX-XXX-XXXX
+    for (var i = 0; i < numericValue.length; i++) {
+      if (i == 3 || i == 6) {
+        newText += '-';
+        if (newValue.selection.baseOffset > i) {
+          selectionIndex++;
+        }
+      }
+      newText += numericValue[i];
     }
 
     return TextEditingValue(
-      text: formatted,
-      selection: TextSelection.collapsed(offset: formatted.length),
+      text: newText,
+      selection: TextSelection.collapsed(offset: selectionIndex),
     );
   }
 }

@@ -21,25 +21,26 @@ class EmailService {
     required String purpose,
   }) async {
     try {
-      // Create the email data
+      // Create the email data without the timestamp
       final emailData = {
         'name': name,
         'email': email,
         'phone': phone,
         'message': message,
         'purpose': purpose,
-        'timestamp': FieldValue.serverTimestamp(),
       };
 
       // Call the Cloud Function
       final HttpsCallable callable = _functions.httpsCallable('sendEmail');
       final result = await callable.call(emailData);
 
-      // Log the email in Firestore
-      await _logEmail(emailData, result.data['messageId']);
+      // Add timestamp when logging to Firestore
+      await _logEmail({
+        ...emailData,
+        'timestamp': FieldValue.serverTimestamp(),
+      }, result.data['messageId']);
 
     } catch (e) {
-      // Log the error and rethrow
       await _logError(e.toString());
       throw EmailServiceException('Failed to send email: ${e.toString()}');
     }
