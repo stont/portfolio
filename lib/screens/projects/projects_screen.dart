@@ -171,24 +171,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: _categories.map((category) {
-                      final isSelected = _selectedCategory == category;
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: FilterChip(
-                          label: Text(category),
-                          selected: isSelected,
-                          onSelected: (selected) {
-                            setState(() {
-                              _selectedCategory = category;
-                              _filterProjects(_searchController.text);
-                            });
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  ),
+
                 ),
               ),
               const SizedBox(width: 8),
