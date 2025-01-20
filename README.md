@@ -161,6 +161,151 @@ flutter build web
 - Through Firebase Console
 - Manual deployment of build/web folder
 
+## 🔥 Firebase Setup
+
+### 1. Firebase Project Setup
+1. Create a new Firebase project at (https://console.firebase.google.com)
+2. Enable Firebase Hosting and Firestore
+3. Add a web app to your Firebase project
+4. Note down your Firebase configuration details
+
+### 2. Firebase Configuration
+1. Update your Firebase configuration in `lib/core/config/firebase_config.dart`:
+```dart
+class FirebaseConfig {
+  static const String projectId = 'your-project-id';
+  static const String storageBucket = 'your-project-id.firebasestorage.app';
+}
+```
+
+2. Configure Firebase CLI:
+```bash
+# Install Firebase CLI globally
+npm install -g firebase-tools
+
+# Login to Firebase
+firebase login
+
+# Initialize Firebase in your project
+firebase init
+```
+
+3. Select the following Firebase features when prompted:
+    - Hosting
+    - Firestore
+    - Functions
+
+### 3. Firebase Functions Setup
+
+1. Create Functions directory structure:
+```bash
+# Navigate to functions directory
+cd functions
+
+# Initialize npm project
+npm init
+
+# Install required dependencies
+npm install firebase-admin firebase-functions
+```
+
+2. Functions directory structure:
+```
+functions/
+├── node_modules/
+├── src/
+│   └── index.js
+├── package.json
+├── package-lock.json
+└── tsconfig.json
+```
+
+3. Configure package.json in functions directory:
+```json
+{
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+```
+
+4. Initialize Functions emulator (optional):
+```bash
+firebase init emulators
+```
+
+### 4. Deploy Firebase Configuration
+
+1. Deploy Hosting and Functions:
+```bash
+# Deploy everything
+firebase deploy
+
+# Deploy only specific features
+firebase deploy --only hosting
+firebase deploy --only functions
+```
+
+2. Update firebase.json configuration:
+```json
+{
+  "hosting": {
+    "public": "build/web",
+    "site": "your-site-name",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}
+```
+
+### Important Notes:
+- Ensure you have Node.js installed (version 14 or later)
+- Firebase Functions require Blaze (pay-as-you-go) plan
+- Keep your Firebase configuration details secure
+- Don't commit sensitive information to version control
+
+[Rest of the README remains the same]
+
 ## 📝 Customization
 
 1. Theme Customization:
