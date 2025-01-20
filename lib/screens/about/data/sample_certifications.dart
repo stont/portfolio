@@ -3,6 +3,27 @@ import '../models/certification.dart';
 
 final List<Certification> certifications = [
   Certification(
+    name: 'Mastering Communications as a Leader',
+    issuedBy: 'LinkedIn',
+    issuedDate: '2025',
+    credentialUrl: 'https://www.linkedin.com/learning/certificates/64eb59f9951c05d8b1db35cb7bbe5f0e6470772ea26482c57126f53e0548e28a?trk=share_certificate',
+    description: 'Leaders aren’t born, they’re trained. Leaders develop their abilities to motivate and inspire others to positive action. Regardless of where you are in your career, boosting your communications skills will take you where you want to go, faster.',
+  ),
+  Certification(
+    name: 'Building Business Relationships',
+    issuedBy: 'LinkedIn',
+    issuedDate: '2025',
+    credentialUrl: 'https://www.linkedin.com/learning/certificates/2af7a14e841d37fec5c49ca6fa4e25352eecbc0e2bdcba947cf3fc445961cf71?trk=share_certificate',
+    description: 'Building Business Relationships.',
+  ),
+  Certification(
+    name: 'Flutter Essential Training: Build for Multiple Platforms',
+    issuedBy: 'LinkedIn',
+    issuedDate: '2025',
+    credentialUrl: 'https://www.linkedin.com/learning/certificates/00596071cdc2b263666d4a11fe50c4b1c52997a8cc2a01dd8172421605a74881?trk=share_certificate',
+    description: 'Everything a complete beginner needs to get started using Dart and Flutter.',
+  ),
+  Certification(
     name: 'Dart Clean Code',
     issuedBy: 'LinkedIn',
     issuedDate: '2025',

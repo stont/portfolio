@@ -14,7 +14,7 @@ class CertificationsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final crossAxisCount = screenWidth < 600 ? 1 : screenWidth < 900 ? 2 : 3;
+    final isMobile = screenWidth < 600;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,24 +26,36 @@ class CertificationsSection extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
-        const SizedBox(height: 24),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20,
-            childAspectRatio: 1.2,
-          ),
-          itemCount: certifications.length,
-          itemBuilder: (context, index) {
-            return CertificationCard(
+        const SizedBox(height: 16),
+        if (isMobile)
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: certifications.length,
+            itemBuilder: (context, index) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: CertificationCard(
+                certification: certifications[index],
+                delay: Duration(milliseconds: 200 * index),
+              ),
+            ),
+          )
+        else
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: screenWidth < 900 ? 2 : 3,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+              childAspectRatio: 1.2,
+            ),
+            itemCount: certifications.length,
+            itemBuilder: (context, index) => CertificationCard(
               certification: certifications[index],
               delay: Duration(milliseconds: 200 * index),
-            );
-          },
-        ),
+            ),
+          ),
       ],
     );
   }
